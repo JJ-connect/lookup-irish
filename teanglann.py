@@ -58,13 +58,13 @@ def get_line_types_gender(word, line):
         else:
             soup_fb = get_definition_soup(word, 'teanglann', lang='ga-fb')
             entry_fb = soup_fb.find(class_='entry')
-            if soup_fb.find(text='aid3'):
+            if soup_fb.find(string='aid3'):
                 gender_a += '3'
-            elif soup_fb.find(text='aid2'):
+            elif soup_fb.find(string='aid2'):
                 gender_a += '2'
-            elif soup_fb.find(text='aid1'):
+            elif soup_fb.find(string='aid1'):
                 gender_a += '1'
-            elif not soup_fb.find(text='aid'):
+            elif not soup_fb.find(string='aid'):
                 # 'thar' spurious adj. in following:
                 # ' of <span title="adjective">a</span> general nature'
                 del types['Adjective']
@@ -383,7 +383,7 @@ def get_teanglann_subentries(word):
         for node in entry.contents[:]:
             node_text = bs4_get_text(node)
             if f'{n}.' in re.sub(rf'adjective\s*{1}.', '', node_text):
-                as_subnode = node.find(text=re.compile(rf'\s+{n}.\s+'))
+                as_subnode = node.find(string=re.compile(rf'\s+{n}.\s+'))
                 if as_subnode:
                     rev = []
                     for r in as_subnode.previous_siblings:
@@ -682,7 +682,7 @@ rudaí cearta
     ret = {}
     soup_gram = get_definition_soup(adjective, 'teanglann', lang='ga-gram')
     for gram in soup_gram.find_all(class_="gram"):
-        if not gram.find(text='ADJECTIVE'):
+        if not gram.find(string='ADJECTIVE'):
             continue
         for section in gram.find_all(class_="section"):
             k1 = section.find('h2').text.lower()
